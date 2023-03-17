@@ -98,34 +98,34 @@
 //     updateUser: () => void,
 // }
 
-interface IUser {
-    name: string,
-    age: number
-}
+// interface IUser {
+//     name: string,
+//     age: number
+// }
 
-const arr: IUser[] = [
-    { name: 'John', age: 12 },
-    { name: 'John', age: 12 }
-]
-function we17304_map<T>(arr: T[], cb: (item: T) => T): T[] {
-    let temp = [];
-    for (let i = 0; i < arr.length; i++) {
-        const newArr = cb(arr[i]);
-        temp.push(newArr);
-    }
-    return temp;
-}
+// const arr: IUser[] = [
+//     { name: 'John', age: 12 },
+//     { name: 'John', age: 12 }
+// ]
+// function we17304_map<T>(arr: T[], cb: (item: T) => T): T[] {
+//     let temp = [];
+//     for (let i = 0; i < arr.length; i++) {
+//         const newArr = cb(arr[i]);
+//         temp.push(newArr);
+//     }
+//     return temp;
+// }
 
-const newArr = we17304_map(arr,(item)=>{
-    return {name:item.name,age:item.age*2}
-})
-console.log(newArr);
+// const newArr = we17304_map(arr,(item)=>{
+//     return {name:item.name,age:item.age*2}
+// })
+// console.log(newArr);
 
-function sort_We17304<T>(array: T[], cb?: (a: T, b: T) => boolean): void {
+function sort_We17304<T>(array: T[], cb?: (a: T, b: T) => number): void {
     if (cb && typeof (cb) === "function") {
         for (let i = 0; i < array.length - 1; i++) {
             for (let j = i + 1; j < array.length; j++) {
-                if (cb(array[i],array[j])) {
+                if (cb(array[i],array[j]) >0) {
                     let temp = array[i]
                     array[i] = array[j]
                     array[j] = temp;
@@ -147,7 +147,7 @@ function sort_We17304<T>(array: T[], cb?: (a: T, b: T) => boolean): void {
 }
 const arr_test = [1,5,3,7]
 sort_We17304(arr_test,(a,b)=>{
-    return a > b
+    return b-a
 })
 console.log(arr_test);
 
