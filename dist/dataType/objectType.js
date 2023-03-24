@@ -126,7 +126,5 @@ function sort_We17304(array, cb) {
     }
 }
 var arr_test = [1, 5, 3, 7];
-sort_We17304(arr_test, function (a, b) {
-    return b - a;
-});
+sort_We17304(arr_test);
 console.log(arr_test);

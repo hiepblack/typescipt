@@ -146,8 +146,6 @@ function sort_We17304<T>(array: T[], cb?: (a: T, b: T) => number): void {
     }
 }
 const arr_test = [1,5,3,7]
-sort_We17304(arr_test,(a,b)=>{
-    return b-a
-})
+sort_We17304(arr_test)
 console.log(arr_test);
 
