@@ -10,7 +10,8 @@ const Game = () => {
   const [checkWinner, setCheckWinner] = useState([]);
   const [undo, setUndo] = useState([]);
   const [time, setTime] = useState(3);
-
+  const [check, setCheck] = useState(false);
+  const [timeIdState, setTimeIdState] = useState(null);
   const winner = calculateWinner(cells);
 
   const handleClick = (index) => {
@@ -22,21 +23,52 @@ const Game = () => {
     cellCoppy[index] = isNext ? "X" : "O";
     setCells(cellCoppy);
     setIsNext(!isNext);
+    setCheck(!check);
+    setTime(3);
   };
   useEffect(() => {
-    if(!winner){
-      setTimeout(() => {
+    let timeId;
+    if (check) {
+      timeId = setTimeout(() => {
         setTime(time - 1);
       }, 1000);
-      if(time < 0) {
-        handleClick(Math.floor(Math.random() * 9))
-        setTime(3)
+      console.log(time);
+      if (time === 0) {
+        const cellCoppy = [...cells];
+        let indexrandom = Math.floor(Math.random() * 9);
+        console.log(indexrandom);
+        console.log(cellCoppy);
+        let arr = [];
+        cellCoppy.forEach((item, index) => {
+          if (item || winner) {
+            clearTimeout(timeId);
+            console.log(index);
+            return;
+          } else {
+            arr.push(index);
+          }
+        });
+        if (arr.length < 1) {
+          alert("hoà rồi");
+          setCells(Array(9).fill(null));
+          setTime(3);
+          clearTimeout(timeId);
+          return;
+        }
+        var randomIndex = Math.floor(Math.random() * arr.length);
+        var randomNumber = arr[randomIndex];
+        cellCoppy[randomNumber] = isNext ? "X" : "O";
+        setCells(cellCoppy);
+        setIsNext(!isNext);
+        setCheck(false);
+        setTime(3);
+        clearTimeout(timeId);
       }
-    }else{
-      setTime(0)
-      return;
+      if (winner) {
+        clearTimeout(timeId);
+      }
     }
-  }, [time]);
+  }, [time, check]);
   useEffect(() => {
     if (winner) {
       const newArr = [];
@@ -48,18 +80,18 @@ const Game = () => {
   const resetGame = () => {
     setCells(Array(9).fill(null));
     setCheckWinner([]);
-    setTime(3)
     setIsNext(true);
   };
   const undoGame = () => {
     setCells(undo);
     setIsNext(!isNext);
-    setTime(3)
   };
   return (
     <div className="game">
       <Timer time={time} />
-      <div className="winner">{winner ? `${winner.value}: đã chiến thắng` : ""}</div>
+      <div className="winner">
+        {winner ? `${winner.value}: đã chiến thắng` : ""}
+      </div>
       <div className="game__box">
         <h1>Tic-Tac-Toc</h1>
         <Board
@@ -68,7 +100,7 @@ const Game = () => {
           checkWinner={checkWinner}
           winner={winner}
         />
-        
+
         <div className="game__button">
           <button onClick={resetGame} className="btn">
             Reset
