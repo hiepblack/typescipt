@@ -1,10 +1,10 @@
 import "./App.css";
-import Game from "./components/game/Game";
+import Learn from "./components/learn/Learn.jsx";
 
 function App() {
   return (
     <div className="App">
-      <Game/>
+      <Learn />
     </div>
   );
 }

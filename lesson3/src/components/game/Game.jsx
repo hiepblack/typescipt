@@ -11,7 +11,6 @@ const Game = () => {
   const [undo, setUndo] = useState([]);
   const [time, setTime] = useState(3);
   const [check, setCheck] = useState(false);
-  const [timeIdState, setTimeIdState] = useState(null);
   const winner = calculateWinner(cells);
 
   const handleClick = (index) => {
@@ -81,6 +80,8 @@ const Game = () => {
     setCells(Array(9).fill(null));
     setCheckWinner([]);
     setIsNext(true);
+    setTime(3);
+    setCheck(false);
   };
   const undoGame = () => {
     setCells(undo);
